@@ -71,7 +71,7 @@ export default defineComponent( {
     flex-wrap: wrap;
   }
   .movie-item{
-    width: 25%;
+    width: 20%;
     display: flex;
     flex-direction: column;
     margin: 10px;
