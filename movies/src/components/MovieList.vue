@@ -29,6 +29,10 @@ export default defineComponent( {
     page: {
       type: Number,
       required: true
+    },
+    category: {
+      type: String,
+      required: true
     }
   },
    
@@ -37,9 +41,10 @@ export default defineComponent( {
     const movies = ref([])
     const loading = ref(true)
     const baseUrl = "http://image.tmdb.org/t/p/w300";
+    
 
     const loadMovies = async () => {
-      movies.value = await fetchPage(props.page)
+      movies.value = await fetchPage(props.category, props.page)
       loading.value = false;
     }
 
