@@ -8,7 +8,7 @@
                 <router-link to="/home">Home</router-link>
                 <router-link to="/about">About us</router-link>
                 <router-link to="/popular">Popular</router-link>
-                <router-link to="/top">Top Rated</router-link>
+                <router-link to="/top_rated">Top Rated</router-link>
             </nav>
         </div>
    </header>

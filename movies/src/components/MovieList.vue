@@ -4,8 +4,8 @@
 
     <div class="movies" v-if="!loading">
       <div class="movie-item" v-for='movie in movies' :key='movie.id' >
-        <img :src="baseUrl+movie.backdrop_path" alt="poster" >
-        <div>{{ movie.title }}</div>
+        <img :src="baseUrl+movie.poster_path" alt="poster" >
+        <router-link :to="`/popular/${movie.id}`"><div>{{ movie.title }}</div></router-link>
       </div>
     </div>
 

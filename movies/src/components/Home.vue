@@ -2,16 +2,17 @@
     <main>
       <h2>Home</h2>
       <div class="category-blocks">
-        <div class="block" v-for="category in categories" :key="category.path">
+        <div class="block" v-for="category in movieList" :key="category.path">
           <div class="top">
-            <h3>{{ category.title }}</h3>
+            <h3>{{ category.type }}</h3>
             <router-link class="block-link" :to="category.path">More</router-link>
           </div>
           <div v-if="!loader">
             <Load />
           </div>
           <div v-else class="catalog">
-            <div v-for="item in movie" :key="item.id">
+            <div v-for="item in category.list" :key="item.id" class="catalog_item">
+              <img :src="baseUrl+item.poster_path" alt="poster" >
               {{ item.title }}
             </div>
     
@@ -36,6 +37,7 @@
     setup(){
       
       const loader = ref(false)
+      const baseUrl = "http://image.tmdb.org/t/p/w300";
 
     const categories = [
       {
@@ -60,11 +62,33 @@
       },
     ]
 
+    const types = ['popular', 'top_rated']
+    const movieList = ref([]);
+
     const movie = ref([])
+
+   for(let type of types){
+    const list = ref([])
+    const loadList = async() => {
+      const result = await fetchPage(type, 1)
+      list.value = result.slice(0, 5)
+    }
+    watchEffect(() => {
+      loadList()
+    })
+
+    const obj = {
+      type,
+      path: type,
+      list: list
+    }
+    movieList.value.push(obj)
+    
+   }
+   console.log(movieList.value)
 
     const fetchPreview = async () => {
       const result = await fetchPage("popular", 1);
-      console.log(result)
       loader.value = true;
       movie.value = result.slice(0, 5)
     }
@@ -77,7 +101,9 @@
       return{
         categories,
         movie,
-        loader
+        loader,
+        movieList,
+        baseUrl
       }
     }
   })
@@ -109,6 +135,21 @@
       color: rgb(220, 35, 51);
       text-decoration: none;
       font-weight: 700;
+    }
+
+    .catalog{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .catalog_item{
+      margin-right: 10px;
+      width: 300px;
+    }
+    .catalog_item img{
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
     }
 
   </style>

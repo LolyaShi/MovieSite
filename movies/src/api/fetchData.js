@@ -6,6 +6,7 @@ const headers = {
   }
 
 const API_URL = "https://api.themoviedb.org/3/movie/popular?language=en-US&page"
+const API_ID = (id) => {return `https://api.themoviedb.org/3/movie/${id}`}
 //const API_URL_LIMIT = (page) => {return `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`}
 const BASE_URL = (category, page) => {return `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`}
 
@@ -21,4 +22,10 @@ export async function fetchData(){
 
 export async function fetchPage(category, page){
     return await getData(category, page)
+}
+
+export async function fetchMovie(id){
+    const response = await axios.get(API_ID(id), {headers})
+    console.log(response.data)
+    return response.data
 }
