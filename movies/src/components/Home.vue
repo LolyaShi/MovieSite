@@ -2,18 +2,24 @@
     <main>
       <h2>Home</h2>
       <div class="category-blocks">
-        <div class="block" v-for="category in movieList" :key="category.path">
+        <div class="block" v-for="category in categories" :key="category.path">
           <div class="top">
-            <h3>{{ category.type }}</h3>
-            <router-link class="block-link" :to="category.path">More</router-link>
+            <h3>{{ category.title }}</h3>
+            <router-link class="block-link" :to="`/movies/${category.path}`">More</router-link>
           </div>
           <div v-if="!loader">
             <Load />
           </div>
           <div v-else class="catalog">
+            {{category.list.value}}
             <div v-for="item in category.list" :key="item.id" class="catalog_item">
-              <img :src="baseUrl+item.poster_path" alt="poster" >
-              {{ item.title }}
+              <router-link :to="`/popular/${item.id}`">
+                <img :src="baseUrl+item.poster_path" alt="poster" >
+                <div class="item_name">
+                  {{ item.title }}
+                </div>
+              </router-link>
+              
             </div>
     
           </div>
@@ -25,7 +31,7 @@
   
   <script>
   import { fetchPage } from '@/api/fetchData';
-  import {defineComponent, ref, watchEffect} from 'vue'
+  import {defineComponent, ref, watchEffect, watch} from 'vue'
 
   import Load from '@/components/Load.vue'
   export default defineComponent( {
@@ -39,38 +45,71 @@
       const loader = ref(false)
       const baseUrl = "http://image.tmdb.org/t/p/w300";
 
-    const categories = [
+    const categories = ref([
       {
         title: "Popular movies",
-        path: "/popular",
-        category: "popular"
+        path: "popular",
+        type: "popular",
+  
       },
       {
         title: "Top rated movies",
-        path: "/top",
-        category: "top_rated"
+        path: "top_rated",
+        type: "top_rated",
+        list: []
       },
-      {
+      /*{
         title: "Upcoming",
-        path: "/top",
-        category: "popular"
+        path: "top_rated",
+        type: "popular",
+        list: []
       },
       {
         title: "Top rated serials",
-        path: "/top",
-        category: "popular"
-      },
-    ]
+        path: "top_rated",
+        type: "popular",
+        list: []
+      },*/
+    ])
 
+   /* for(let category of categories.value){
+      
+      const loadList = async() => {
+      
+        const result = await fetchPage('movie', category.type, 1)
+        category.list  = result.slice(0, 5)
+        
+      }
+      watchEffect(() => {
+        loadList()
+      })
+
+      
+      
+    }*/
+    for(let category of categories.value){
+    watch(category, async() => {
+        try{
+          const result = await fetchPage('movie', category.type, 1)
+          category.list  = result.slice(0, 5)
+          console.log(result)
+        }
+        catch(error){
+          console.log(error)
+        }
+        
+        
+      })
+    }
+    //console.log(categories.value[0].list)
     const types = ['popular', 'top_rated']
     const movieList = ref([]);
 
-    const movie = ref([])
 
    for(let type of types){
     const list = ref([])
     const loadList = async() => {
-      const result = await fetchPage(type, 1)
+      const result = await fetchPage("movie", type, 1)
       list.value = result.slice(0, 5)
     }
     watchEffect(() => {
@@ -85,22 +124,12 @@
     movieList.value.push(obj)
     
    }
-   console.log(movieList.value)
+   
 
-    const fetchPreview = async () => {
-      const result = await fetchPage("popular", 1);
-      loader.value = true;
-      movie.value = result.slice(0, 5)
-    }
-
-    watchEffect(() => {
-      fetchPreview()
-    })
-    
+    console.log(categories.value)
 
       return{
         categories,
-        movie,
         loader,
         movieList,
         baseUrl
@@ -136,6 +165,9 @@
       text-decoration: none;
       font-weight: 700;
     }
+    h3{
+      text-transform: uppercase;
+    }
 
     .catalog{
       display: flex;
@@ -145,11 +177,31 @@
     .catalog_item{
       margin-right: 10px;
       width: 300px;
+      position: relative;
     }
     .catalog_item img{
       max-width: 100%;
       height: auto;
       object-fit: contain;
+    }
+    .item_name{
+      position: absolute;
+      top:0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      flex-direction: column;
+      justify-content: center;
+      background-color: rgba(16, 15, 15, 0.689);
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      display: none;
+      transition: all .4s;
+    }
+    .catalog_item:hover .item_name{
+      display: flex;
     }
 
   </style>

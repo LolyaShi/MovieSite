@@ -1,7 +1,7 @@
 <template>
 
     <div v-if='!loading'>
-      <MovieList :page="currentPage" :category = "category" />
+      <MovieList :page="currentPage" :category="category" :type="type" />
       <Pagination :count="pageCount" :currentPage="currentPage" :changePage="changePage" />
     </div>
   
@@ -24,14 +24,20 @@
       MovieList,
       Pagination
     },
+    props: {
+      category: {
+        type: String,
+        required: true
+      }
+    },
   
     setup(){
   
       const loading = ref(true)
-      const currentPage = ref(1)
+      const currentPage = ref(10)
       const pageCount = ref(0)
-      const category = ref('top_rated');
-  
+      const type = ref("tv")
+      
   
       onMounted(() => {
         fetchData()
@@ -54,7 +60,7 @@
         currentPage,
         pageCount,
         changePage,
-        category
+        type
       }
     }
   

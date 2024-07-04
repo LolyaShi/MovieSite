@@ -3,20 +3,35 @@
         <Load />
     </div>
     <div v-else class="wrapper">
+      <div class="top">
+        <img :src="`${baseUrl}w1280${movie.backdrop_path}`" alt="movie img">
+        <h2>{{ movie.title }}</h2>
+        <div class="shadow"></div>
+      </div>
       <div class="movie">
         <div class="poster">
-          <img :src="baseUrl+movie.poster_path" alt="poster">
+          <img :src="`${baseUrl}w300${movie.poster_path}`" alt="poster">
         </div>
         <div class="info">
-          <h2>{{ movie.title }}</h2>
-          <p>Year: {{movie.release_date}} </p>
-          <p>Rate: {{movie.vote_average}} </p>
-          <p>Genres: 
-            <span class='genre' v-for="genre in movie.genres" :key="genre.id">{{ genre.name }} </span>
-
+          
+          <p><span class="mini-title">Year:</span> {{movie.release_date}} </p>
+          <p><span class="mini-title">Countries: </span>
+            <span class='genre' v-for="country in movie.production_countries" :key="country.name">{{ country.name }} </span>
           </p>
-          <p>About: {{ movie.overview }}</p>
+          <p><span class="mini-title">Prodaction companies: </span>
+            <span class='genre' v-for="company in movie.production_companies" :key="company.id">{{ company.name }} </span>
+          </p>
+          <p><span class="mini-title">Rate:</span> {{movie.vote_average}} </p>
+          <p><span class="mini-title">Genres: </span>
+            <span class='genre' v-for="genre in movie.genres" :key="genre.id">{{ genre.name }} </span>
+          </p>
+          <p><span class="mini-title">Runtime:</span> {{ movie.runtime }} min</p>
+         
         </div>
+      </div>
+      <div class="overview">
+        <div class="mini-title">About:</div>
+        <p> {{ movie.overview }}</p>
       </div>
     </div>
   </template>
@@ -39,7 +54,7 @@ import {defineComponent, ref, watchEffect} from 'vue'
      
     setup(props){
       
-      const baseUrl = "http://image.tmdb.org/t/p/w300";
+      const baseUrl = "http://image.tmdb.org/t/p/";
       const movie = ref(null);
       const loading = ref(true);
 
@@ -65,13 +80,42 @@ import {defineComponent, ref, watchEffect} from 'vue'
   <style scoped>
     .wrapper{
       padding: 20px;
+     
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .top{
+      width: 100%;
+      height: 500px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .top img{
+      width: 100%;
+      height: auto;
+      object-fit: contain
+    }
+    .shadow{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(35, 32, 32, 0.676);
+      z-index: 1;
+      box-shadow: 0 0 20px 20px rgba(35, 32, 32, 0.676);
     }
     .movie{
       display: flex;
-      justify-content: center
+      justify-content: center;
+      margin-top: 30px;
     }
     .poster{
-      flex: 0 1 30%;
+      flex: 0 1 40%;
+      position: relative;
+      top: -100px;
+      z-index: 3;
     }
     .poster img{
       max-width: 100%;
@@ -79,19 +123,34 @@ import {defineComponent, ref, watchEffect} from 'vue'
       object-fit: contain;
     }
     .info{
-      flex: 0 1 70%;
-      margin-left: 50px;
-      font-size: 20px;
+      flex: 0 1 60%;
+      
+      font-size: 18px;
       line-height: 23px;
       color: #fff;
       text-align: left;
+      padding: 0 50px;
     }
     h2{
-      font-size: 28px;
+      font-size: 50px;
       font-weight: 700;
+      position: absolute;
+      top: 200px;
+      left: 40%;
+      z-index: 3;
     }
     .genre{
       margin-left: 10px
+    }
+    .mini-title{
+      color: #d32b2b;
+      font-weight: 700;
+    }
+    .overview{
+      text-align: left;
+      padding: 0 100px;
+      font-size: 20px;
+      line-height: 24px;
     }
   </style>
   

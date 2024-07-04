@@ -26,7 +26,8 @@
         max-width: 1400px;
         margin: 0 auto;
         min-height: 100vh;
-        padding: 50px 0;
+        padding: 0  0 50px 0;
+        position: relative;
     }
   </style>
   

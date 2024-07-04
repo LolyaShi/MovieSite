@@ -1,7 +1,8 @@
 <template>
-  <Header />
+  
   
   <MainLayout>
+    <Header />
     <router-view />
   </MainLayout>
   
@@ -38,9 +39,8 @@ export default defineComponent ({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #fff;
   margin-top: 10px;
-  background-color: rgb(21, 19, 19)
-  
+  background-color: rgb(21, 19, 19);
 }
 </style>
