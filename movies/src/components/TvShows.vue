@@ -14,7 +14,7 @@
   import Pagination from './Pagination.vue'
   import {fetchData} from '@/api/fetchData'
   
-  import {defineComponent, ref, onMounted} from 'vue'
+  import {defineComponent, ref, watchEffect} from 'vue'
   
   
   export default defineComponent ({
@@ -31,7 +31,7 @@
       }
     },
   
-    setup(){
+    setup(props){
   
       const loading = ref(true)
       const currentPage = ref(10)
@@ -39,10 +39,15 @@
       const type = ref("tv")
       
   
-      onMounted(() => {
-        fetchData()
+      watchEffect(() => {
+        fetchData(type.value, props.category)
           .then((result) => {
-            pageCount.value = result
+            if(result.total_pages > 500){
+              pageCount.value = 500
+            }
+            else{
+              pageCount.value = result.total_pages
+            }
             loading.value = false
           })
           .catch((error) => {

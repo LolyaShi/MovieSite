@@ -31,7 +31,7 @@
   
   <script>
   import { fetchPage } from '@/api/fetchData';
-  import {defineComponent, ref, watchEffect, watch} from 'vue'
+  import {defineComponent, ref, watchEffect} from 'vue'
 
   import Load from '@/components/Load.vue'
   export default defineComponent( {
@@ -50,88 +50,47 @@
         title: "Popular movies",
         path: "popular",
         type: "popular",
-  
+        collection: 'movie',
+        list: []
       },
       {
         title: "Top rated movies",
         path: "top_rated",
         type: "top_rated",
+        collection: 'movie',
         list: []
       },
-      /*{
+      {
         title: "Upcoming",
-        path: "top_rated",
-        type: "popular",
+        path: "upcoming",
+        type: "upcoming",
+        collection: 'movie',
         list: []
       },
       {
         title: "Top rated serials",
         path: "top_rated",
         type: "popular",
+        collection: 'tv',
         list: []
-      },*/
+      },
     ])
 
-   /* for(let category of categories.value){
-      
-      const loadList = async() => {
-      
-        const result = await fetchPage('movie', category.type, 1)
-        category.list  = result.slice(0, 5)
-        
-      }
-      watchEffect(() => {
-        loadList()
-      })
-
-      
-      
-    }*/
-    for(let category of categories.value){
-    watch(category, async() => {
-        try{
-          const result = await fetchPage('movie', category.type, 1)
-          category.list  = result.slice(0, 5)
-          console.log(result)
-        }
-        catch(error){
-          console.log(error)
-        }
-        
-        
-      })
-    }
-    //console.log(categories.value[0].list)
-    const types = ['popular', 'top_rated']
-    const movieList = ref([]);
-
-
-   for(let type of types){
-    const list = ref([])
-    const loadList = async() => {
-      const result = await fetchPage("movie", type, 1)
-      list.value = result.slice(0, 5)
-    }
-    watchEffect(() => {
-      loadList()
-    })
-
-    const obj = {
-      type,
-      path: type,
-      list: list
-    }
-    movieList.value.push(obj)
-    
-   }
    
+    for(let category of categories.value){
+      watchEffect(async () => {
+        const result = await fetchPage(category.collection, category.type, 1)
+        category.list  = result.slice(0, 5)
+        loader.value = true
+      })
+      
+    }
 
-    console.log(categories.value)
 
       return{
         categories,
         loader,
-        movieList,
+
         baseUrl
       }
     }
