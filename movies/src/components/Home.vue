@@ -13,7 +13,7 @@
           <div v-else class="catalog">
             {{category.list.value}}
             <div v-for="item in category.list" :key="item.id" class="catalog_item">
-              <router-link :to="`/popular/${item.id}`">
+              <router-link :to="`/${category.link}/${item.id}`">
                 <img :src="baseUrl+item.poster_path" alt="poster" >
                 <div class="item_name">
                   {{ item.title }}
@@ -51,6 +51,7 @@
         path: "popular",
         type: "popular",
         collection: 'movie',
+        link: 'popular',
         list: []
       },
       {
@@ -58,6 +59,7 @@
         path: "top_rated",
         type: "top_rated",
         collection: 'movie',
+        link: 'popular',
         list: []
       },
       {
@@ -65,6 +67,7 @@
         path: "upcoming",
         type: "upcoming",
         collection: 'movie',
+        link: 'popular',
         list: []
       },
       {
@@ -72,6 +75,7 @@
         path: "top_rated",
         type: "popular",
         collection: 'tv',
+        link: 'tv_shows',
         list: []
       },
     ])
