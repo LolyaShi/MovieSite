@@ -9,9 +9,9 @@
   </template>
   
   <script>
-  import MovieList from './MovieList.vue'
-  import Load from './Load.vue'
-  import Pagination from './Pagination.vue'
+  import MovieList from '@/pages/Movies/MovieList.vue'
+  import Load from '@/components/Load.vue'
+  import Pagination from '@/components/Pagination'
   import {fetchData} from '@/api/fetchData'
   
   import {defineComponent, ref, watchEffect} from 'vue'

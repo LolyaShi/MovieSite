@@ -4,9 +4,9 @@
 
     <div class="movies" v-if="!loading">
       <div class="movie-item" v-for='movie in movies' :key='movie.id' >
-        <router-link :to="`/popular/${movie.id}`">
+        <router-link :to="`/tv_shows/${movie.id}`">
           <div class="movie_img"><img :src="baseUrl+movie.poster_path" alt="poster" ></div>
-          <div>{{ movie.title }}</div>
+          <div>{{ movie.name }}</div>
         </router-link>
       </div>
     </div>
@@ -20,10 +20,10 @@
 <script>
 import { fetchPage } from '@/api/fetchData';
 import {defineComponent, ref, watchEffect} from 'vue'
-import Load from './Load.vue';
+import Load from '@/components/Load.vue';
 
 export default defineComponent( {
-  name: 'MovieList',
+  name: 'TvList',
   components: {
     Load
   },

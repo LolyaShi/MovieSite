@@ -6,12 +6,13 @@ const headers = {
   }
 
 const API_URL = (type, category) =>{return `https://api.themoviedb.org/3/${type}/${category}?language=en-US`}
-const API_ID = (id) => {return `https://api.themoviedb.org/3/movie/${id}`}
+const API_ID = (type, id) => {return `https://api.themoviedb.org/3/${type}/${id}`}
 //const API_URL_LIMIT = (page) => {return `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`}
 const BASE_URL = (type, category, page) => {return `https://api.themoviedb.org/3/${type}/${category}?language=en-US&page=${page}`}
 
 async function getData(type, category, page){
     const response = await axios.get(BASE_URL(type, category, page), {headers});
+    console.log(response.data.results)
     return response.data.results;
 }
 
@@ -24,8 +25,8 @@ export async function fetchPage(type, category, page){
     return await getData(type, category, page)
 }
 
-export async function fetchMovie(id){
-    const response = await axios.get(API_ID(id), {headers})
+export async function fetchMovie(type, id){
+    const response = await axios.get(API_ID(type, id), {headers})
     console.log(response.data)
     return response.data
 }

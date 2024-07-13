@@ -1,7 +1,7 @@
 <template>
 
     <div v-if='!loading'>
-      <MovieList :page="currentPage" :category="category" :type="type" />
+      <TvList :page="currentPage" :category="category" :type="type" />
       <Pagination :count="pageCount" :currentPage="currentPage" :changePage="changePage" />
     </div>
   
@@ -9,9 +9,9 @@
   </template>
   
   <script>
-  import MovieList from './MovieList.vue'
-  import Load from './Load.vue'
-  import Pagination from './Pagination.vue'
+  import TvList from './TvList.vue'
+  import Load from '@/components/Load.vue'
+  import Pagination from '@/components/Pagination'
   import {fetchData} from '@/api/fetchData'
   
   import {defineComponent, ref, watchEffect} from 'vue'
@@ -21,7 +21,7 @@
     name: 'App',
     components: {
       Load,
-      MovieList,
+      TvList,
       Pagination
     },
     props: {
@@ -34,7 +34,7 @@
     setup(props){
   
       const loading = ref(true)
-      const currentPage = ref(10)
+      const currentPage = ref(1)
       const pageCount = ref(0)
       const type = ref("tv")
       

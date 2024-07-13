@@ -38,7 +38,7 @@
   
   <script>
   import { fetchMovie } from '@/api/fetchData';
-  import Load from './Load.vue'
+  import Load from '@/components/Load.vue'
 import {defineComponent, ref, watchEffect} from 'vue'
   export default defineComponent( {
     name: 'MoviePage',
@@ -57,9 +57,10 @@ import {defineComponent, ref, watchEffect} from 'vue'
       const baseUrl = "http://image.tmdb.org/t/p/";
       const movie = ref(null);
       const loading = ref(true);
+      const type = ref('movie')
 
       const loadMovie = async () => {
-        movie.value = await fetchMovie(props.id)
+        movie.value = await fetchMovie(type.value, props.id)
         loading.value = false
       }
 
@@ -135,8 +136,9 @@ import {defineComponent, ref, watchEffect} from 'vue'
       font-size: 50px;
       font-weight: 700;
       position: absolute;
-      top: 200px;
-      left: 40%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 3;
     }
     .genre{
