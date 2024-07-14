@@ -18,11 +18,15 @@
                 <div class="tv">
                     <span class="link popup-title">TV shows</span>
                     <div class="popup-menu">
-                        <router-link class="link" to="/tv/popular">Popular</router-link>
-                        <router-link class="link" to="/tv/top_rated">Top Rated</router-link>
+                        <router-link class="link" to="/tv_shows/popular">Popular</router-link>
+                        <router-link class="link" to="/tv_shows/top_rated">Top Rated</router-link>
                     </div>
                 </div>
             </nav>
+            <div class="search">
+                <input type="text" v-model="search">
+                <router-link :to="`/search/${search}`"><button>Search</button></router-link>
+            </div>
             <div @click="openMenu" class="burger">
                 <span class="line"></span>
             </div>
@@ -38,7 +42,8 @@
   </template>
   
   <script>
-  import {defineComponent, ref} from 'vue'
+
+import {defineComponent, ref} from 'vue'
   export default defineComponent( {
     name: 'Header',
      
@@ -47,10 +52,15 @@
         function openMenu(){
             open.value = !open.value
         }
+        const search = ref()
+
+      
+        
 
       return{
         open,
-        openMenu
+        openMenu,
+        search
       }
     }
   })
@@ -122,7 +132,28 @@
     .popup-menu a:hover{
         background-color: rgb(160, 30, 30);
     }
+    .search input{
+        font-size: 16px;
+        line-height: 18px;
+        padding: 5px;
+        background-color: rgb(52, 45, 45);
+        border: solid 1px #ab3939;
+        color: #fff;
+    }
+    .search input:focus{
+        border: solid 1px #ab3939;
+        outline: none;
+        box-shadow: 0 0 15px  #ab3939;
+    }
+    .search button{
+        font-size: 16px;
+        padding: 5px;
+        background-color: #c51212;
+        color: #fff;
+        margin-left: 5px;
+    }
 
+    /*burger*/ 
     .burger{
         width: 20px;
         height: 20px;

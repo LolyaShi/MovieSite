@@ -13,7 +13,7 @@
           <div v-else class="catalog">
             {{category.list.value}}
             <div v-for="item in category.list" :key="item.id" class="catalog_item">
-              <router-link :to="`/${category.link}/${item.id}`">
+              <router-link :to="`/${category.collection}/${item.id}`">
                 <img :src="baseUrl+item.poster_path" alt="poster" >
                 <div class="item_name">
                   {{ item.title }}

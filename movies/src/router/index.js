@@ -4,6 +4,7 @@ import About from '@/components/About.vue'
 import MoviePage from '@/pages/Movies/MoviePage.vue'
 import TvShows from '@/pages/Tv/TvShows.vue'
 import TvPage from '@/pages/Tv/TvPage.vue';
+import SearchResults from '@/pages/Search/SearchResults'
 import { createRouter, createWebHistory } from "vue-router";
 
 
@@ -28,20 +29,25 @@ const router = createRouter({
             props: true
         },
         {
-            path: '/popular/:id',
+            path: '/movie/:id',
             component: MoviePage,
             props: true
         },
         {
-            path: '/tv/:category',
+            path: '/tv_shows/:category',
             component: TvShows,
             props: true
         },
         {
-            path: '/tv_shows/:id',
+            path: '/tv/:id',
             component: TvPage,
             props: true
         },
+        {
+            path: '/search/:text',
+            component: SearchResults,
+            props: true
+        }
     ]
 })
 

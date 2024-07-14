@@ -4,7 +4,7 @@
 
     <div class="movies" v-if="!loading">
       <div class="movie-item" v-for='movie in movies' :key='movie.id' >
-        <router-link :to="`/tv_shows/${movie.id}`">
+        <router-link :to="`/tv/${movie.id}`">
           <div class="movie_img"><img :src="baseUrl+movie.poster_path" alt="poster" ></div>
           <div>{{ movie.name }}</div>
         </router-link>

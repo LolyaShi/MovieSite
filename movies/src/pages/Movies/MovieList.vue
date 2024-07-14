@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <h1>Most popular movies</h1>
+    <h1>{{category}}</h1>
 
     <div class="movies" v-if="!loading">
       <div class="movie-item" v-for='movie in movies' :key='movie.id' >
-        <router-link :to="`/popular/${movie.id}`">
+        <router-link :to="`/movie/${movie.id}`">
           <div class="movie_img"><img :src="baseUrl+movie.poster_path" alt="poster" ></div>
           <div>{{ movie.title }}</div>
         </router-link>
@@ -74,6 +74,9 @@ export default defineComponent( {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
+  }
+  h1{
+    text-transform: uppercase;
   }
   .movies{
     display: flex;
