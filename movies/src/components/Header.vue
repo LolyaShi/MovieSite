@@ -83,14 +83,14 @@ import {defineComponent, ref} from 'vue'
         padding: 20px 0;
     }
     .logo{
-        width: 50px;
+        
     }
     .logo img{
-        max-width: 100%;
+        max-width: 50px;
         object-fit: contain;
     }
     .link{
-        margin-right: 20px;
+        margin: 0 10px;
         font-size: 20px;
         line-height: 28px;
         color: #fff;

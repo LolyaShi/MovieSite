@@ -10,6 +10,8 @@ const API_ID = (type, id) => {return `https://api.themoviedb.org/3/${type}/${id}
 //const API_URL_LIMIT = (page) => {return `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`}
 const BASE_URL = (type, category, page) => {return `https://api.themoviedb.org/3/${type}/${category}?language=en-US&page=${page}`}
 const SEARCH_URL = (text) => {return `https://api.themoviedb.org/3/search/multi?query=${text}`}
+const SIMILAR_URL = (category, id) => {return `https://api.themoviedb.org/3/${category}/${id}/similar`}
+const REVIEW_URL = (category, id) => {return `https://api.themoviedb.org/3/${category}/${id}/reviews`}
 
 async function getData(type, category, page){
     const response = await axios.get(BASE_URL(type, category, page), {headers});
@@ -35,4 +37,15 @@ export async function fetchMovie(type, id){
 export async function fetchSearchResult(text){
     const response = await axios.get(SEARCH_URL(text), {headers})
     return response.data
+}
+
+export async function fetchSimilar(category, id){
+    const response = await axios.get(SIMILAR_URL(category, id), {headers})
+    return response.data.results
+}
+
+export async function fetchReviews(category, id){
+    const response = await axios.get(REVIEW_URL(category, id), {headers})
+    console.log(response.data.results)
+    return response.data.results
 }

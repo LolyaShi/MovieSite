@@ -57,6 +57,7 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        margin-top: 50px;
     }
     .item{
         min-width: 20%;

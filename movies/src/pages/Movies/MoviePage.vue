@@ -33,11 +33,44 @@
         <div class="mini-title">About:</div>
         <p> {{ movie.overview }}</p>
       </div>
+
+      <div class="similar">
+        <h3 class="mini-title">Similar movies</h3>
+        <div class="similar__container">
+          <div class="similar__item" v-for="item in similar" :key="item.id">
+          
+            <router-link :to="`/movie/${item.id}`">
+              <div>
+                <img :src="`${baseUrl}w300${item.poster_path}`" alt="poster">
+              </div>
+              <div class="similar__title">
+                <span>{{ item.title }}</span>
+              </div>
+            </router-link>
+          
+        </div>
+        </div>
+        
+      </div>
+
+      <div class="reviews">
+        <h2 class="mini-title">Reviews</h2>  
+          <div class="review__container">
+            <div class="review__item" v-for="item in reviews" :key="item.id">
+              <div class="author">
+                {{ item.author }}
+              </div>
+              <div class="review__content">
+                {{item.content}}
+              </div>
+            </div>
+          </div>
+      </div>
     </div>
   </template>
   
   <script>
-  import { fetchMovie } from '@/api/fetchData';
+  import { fetchMovie, fetchSimilar, fetchReviews } from '@/api/fetchData';
   import Load from '@/components/Load.vue'
 import {defineComponent, ref, watchEffect} from 'vue'
   export default defineComponent( {
@@ -64,14 +97,31 @@ import {defineComponent, ref, watchEffect} from 'vue'
         loading.value = false
       }
 
+      
+
+      const similar = ref([])
+      const fetchSimilarMovies = async() => {
+        similar.value = await fetchSimilar(type.value, props.id)
+      }
+
+      
+      const reviews = ref([])
+      const fetchReviewsData = async() => {
+        reviews.value = await fetchReviews(type.value, props.id)
+      }
+
       watchEffect(() => {
-        loadMovie()
+        loadMovie(),
+        fetchSimilarMovies(),
+        fetchReviewsData()
       })
 
       return{
         movie,
         baseUrl,
-        loading
+        loading,
+        similar,
+        reviews
       }
     }
   })
@@ -132,7 +182,7 @@ import {defineComponent, ref, watchEffect} from 'vue'
       text-align: left;
       padding: 0 50px;
     }
-    h2{
+    .top h2{
       font-size: 50px;
       font-weight: 700;
       position: absolute;
@@ -142,7 +192,16 @@ import {defineComponent, ref, watchEffect} from 'vue'
       z-index: 3;
     }
     .genre{
-      margin-left: 10px
+     
+    }
+    .genre:not(:last-child):after{
+      content: '';
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin: 0 10px;
+      background-color: #d32b2b;
     }
     .mini-title{
       color: #d32b2b;
@@ -154,5 +213,80 @@ import {defineComponent, ref, watchEffect} from 'vue'
       font-size: 20px;
       line-height: 24px;
     }
+
+    /*similar */
+
+    .similar{
+      margin-top: 100px;
+    }
+    .similar h3{
+      font-size: 20px;
+      font-weight: 800;
+
+    }
+    .similar__container{
+      display: flex;
+      justify-content: flex-start;
+      overflow-x: scroll;
+
+    }
+    .similar__item{
+      min-width: 20%;
+      position: relative;
+      margin: 0 10px;
+      overflow: hidden;
+ 
+    }
+
+    .similar__item img{
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    .similar__title{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(35, 34, 34, 0.701);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      transition: all .4s;
+      text-align: center;
+    }
+    .similar__title span{
+      padding: 5px;
+    }
+    .similar__item:hover .similar__title{
+      display: flex;
+    }
+
+    /*reviews */
+    .reviews {
+      margin-top: 100px;
+    }
+    .review__container {
+      padding: 0 100px;
+      text-align: left;
+    }
+    .review__item {
+      margin: 20px 0;
+    }
+    .author {
+      font-size: 22px;
+      line-height: 28px;
+      font-weight: 700;
+      color: #d32b2b;
+    }
+    .review__content {
+      padding: 10px 20px;
+      background-color: rgb(48, 44, 44);
+    }
+
   </style>
   
