@@ -50,7 +50,9 @@ export default defineComponent( {
     
 
     const loadMovies = async () => {
-      movies.value = await fetchPage(props.type, props.category, props.page)
+      const result = await fetchPage(props.type, props.category, props.page)
+      movies.value = result
+      //movies.value = result.filter((movie) => {return(movie.genre_ids.includes(16))})
       loading.value = false;
     }
 

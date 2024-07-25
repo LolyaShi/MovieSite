@@ -12,6 +12,7 @@ const BASE_URL = (type, category, page) => {return `https://api.themoviedb.org/3
 const SEARCH_URL = (text) => {return `https://api.themoviedb.org/3/search/multi?query=${text}`}
 const SIMILAR_URL = (category, id) => {return `https://api.themoviedb.org/3/${category}/${id}/similar`}
 const REVIEW_URL = (category, id) => {return `https://api.themoviedb.org/3/${category}/${id}/reviews`}
+const GENRE_URL = (category, id) => {return `https://api.themoviedb.org/3/discover/${category}?language=en-US&page=1&sort_by=popularity.desc&with_genres=${id}`}
 
 async function getData(type, category, page){
     const response = await axios.get(BASE_URL(type, category, page), {headers});
@@ -48,4 +49,17 @@ export async function fetchReviews(category, id){
     const response = await axios.get(REVIEW_URL(category, id), {headers})
     console.log(response.data.results)
     return response.data.results
+}
+
+export async function fetchGenre(category, id){
+    const response = await axios.get(GENRE_URL(category, id), {headers})
+    const res = await axios.get(`https://api.themoviedb.org/3/genre/${id}`, {headers})
+    console.log(res)
+    return response.data.results
+}
+
+
+export const fetchGenreName = async(id) => {
+        const result = await axios.get(`https://api.themoviedb.org/3/genre/${id}`, {headers})
+        return result.data.name
 }

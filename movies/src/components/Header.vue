@@ -5,8 +5,8 @@
                 <router-link to="/home" class="movie-link"><img src="/logo.png" alt="logo"> MovieBase</router-link>
             </div>
             <nav class="menu">
-                <router-link class="link" to="/home">Home</router-link>
-                <router-link class="link" to="/about">About us</router-link>
+                <router-link class="link menu__title" to="/home">Home</router-link>
+                <router-link class="link menu__title" to="/about">About us</router-link>
                 <div class="tv">
                     <span class="link popup-title">Movies</span>
                     <div class="popup-menu">
@@ -25,7 +25,7 @@
             </nav>
             <div class="search">
                 <input type="text" v-model="search">
-                <router-link :to="`/search/${search}`"><button>Search</button></router-link>
+                <router-link :to="`/search/${path}`"><button @click="searchRes">Search</button></router-link>
             </div>
             <div @click="openMenu" class="burger">
                 <span class="line"></span>
@@ -53,14 +53,21 @@ import {defineComponent, ref} from 'vue'
             open.value = !open.value
         }
         const search = ref()
+        const path = ref();
 
-      
+        const searchRes = () =>{
+            path.value = search.value;
+            search.value = "";
+        }
+
         
 
       return{
         open,
         openMenu,
-        search
+        search,
+        path,
+        searchRes
       }
     }
   })
@@ -104,12 +111,21 @@ import {defineComponent, ref} from 'vue'
         font-weight: 700;
         color: rgb(230, 16, 51);
         text-decoration: none;
+        cursor: pointer;
     }
 
     .tv{
         display: inline-block;
         position: relative;
-
+    }
+    .menu__title, .popup-title{
+        transition: all .4s;
+    }
+    .menu__title:hover{
+        color: #c51212;
+    }
+    .tv:hover .popup-title{
+        color:#c51212;
     }
 
     .popup-menu{
@@ -132,6 +148,8 @@ import {defineComponent, ref} from 'vue'
     .popup-menu a:hover{
         background-color: rgb(160, 30, 30);
     }
+    /*search */
+
     .search input{
         font-size: 16px;
         line-height: 18px;
@@ -151,6 +169,7 @@ import {defineComponent, ref} from 'vue'
         background-color: #c51212;
         color: #fff;
         margin-left: 5px;
+        cursor: pointer;
     }
 
     /*burger*/ 

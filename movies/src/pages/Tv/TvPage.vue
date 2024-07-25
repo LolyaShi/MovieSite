@@ -24,7 +24,9 @@
           </p>
           <p><span class="mini-title">Rate:</span> {{movie.vote_average}} </p>
           <p><span class="mini-title">Genres: </span>
-            <span class='genre' v-for="genre in movie.genres" :key="genre.id">{{ genre.name }} </span>
+            <span class='genre' v-for="genre in movie.genres" :key="genre.id">
+              <router-link :to="`/genres/${type}/${genre.id}`">{{ genre.name }} </router-link> 
+            </span>
           </p>
           <p><span class="mini-title">Seasons:</span> {{movie.number_of_seasons}}</p>
           <p><span class="mini-title">Episodes:</span> {{movie.number_of_episodes}}</p>
@@ -207,8 +209,14 @@ import {defineComponent, ref, watchEffect} from 'vue'
       transform: translate(-50%, -50%);
       z-index: 5;
     }
-    .genre{
-      
+    .genre a{
+     color: #fff;
+     text-decoration: none;
+     cursor: pointer;
+     transition: all, .4s;
+    }
+    .genre a:hover{
+      color:#d32b2b;
     }
     .genre:not(:last-child):after{
       content: '';

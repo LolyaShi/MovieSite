@@ -36,7 +36,6 @@
         const searchResult = async() => {
             const result = await fetchSearchResult(props.text)
             searchList.value = result.results.filter((item) => {return item.media_type !== 'person'})
-            console.log(result.results.filter((item) => {return item.media_type !== 'person'}))
         }
         watchEffect(() => {
             searchResult()
