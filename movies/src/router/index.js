@@ -6,6 +6,7 @@ import TvShows from '@/pages/Tv/TvShows.vue'
 import TvPage from '@/pages/Tv/TvPage.vue';
 import SearchResults from '@/pages/Search/SearchResults'
 import MovieGenre from '@/pages/Movies/MovieGenre.vue'
+import Genres from '@/pages/Genres/Genres.vue';
 import { createRouter, createWebHistory } from "vue-router";
 
 
@@ -23,6 +24,10 @@ const router = createRouter({
         {
             path: '/about',
             component: About
+        },
+        {
+            path: '/genres',
+            component: Genres
         },
         {
             path: '/movies/:category',

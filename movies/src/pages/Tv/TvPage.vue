@@ -45,7 +45,7 @@
           
             <router-link :to="`/${type}/${item.id}`">
               <div>
-                <img :src="`${baseUrl}w300${item.poster_path}`" alt="poster">
+                <img :src="`${baseUrl}w500${item.poster_path}`" alt="poster">
               </div>
               <div class="similar__title">
                 <span>{{ item.name }}</span>
@@ -141,10 +141,10 @@ import {defineComponent, ref, watchEffect} from 'vue'
   <style scoped>
     .wrapper{
       padding: 20px;
-     
+      width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      
     }
     .top{
       width: 100%;
@@ -176,19 +176,21 @@ import {defineComponent, ref, watchEffect} from 'vue'
     }
     .movie{
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       margin-top: 30px;
     }
     .poster{
       flex: 0 1 40%;
+      width: 100%;
       position: relative;
       top: -100px;
+      
       z-index: 3;
     }
     .poster img{
       max-width: 100%;
       height: auto;
-      object-fit: contain;
+      object-fit: cover;
     }
     .info{
       flex: 0 1 60%;
@@ -197,7 +199,7 @@ import {defineComponent, ref, watchEffect} from 'vue'
       line-height: 23px;
       color: #fff;
       text-align: left;
-      padding: 0 50px;
+     
     }
     .top h2{
       font-size: 50px;

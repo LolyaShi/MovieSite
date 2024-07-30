@@ -1,7 +1,7 @@
 <template>
 
     <div v-if='!loading'>
-      <MovieList :type="type" :page="currentPage" :category="category"  />
+      <MovieList :type="type" :page="currentPage" :category="category" :title = "title"  />
       <Pagination :count="pageCount" :currentPage="currentPage" :changePage="changePage" />
     </div>
   
@@ -37,7 +37,29 @@
       const currentPage = ref(1)
       const pageCount = ref(20)
       const type = ref("movie")
-      
+      const title = ref()
+
+      const categories = [
+        {
+          name: 'popular',
+          title: 'Most popular movies' 
+        },
+        {
+          name: 'top_rated',
+          title: 'Top rated movies' 
+        },
+        {
+          name: 'upcoming',
+          title: 'Upcoming movies' 
+        },
+      ]
+
+      watchEffect(() => {
+        const find = categories.filter((item) => {return item.name == props.category})
+        title.value = find[0].title
+ 
+      })
+    
   
       watchEffect(() => {
         fetchData(type.value, props.category)
@@ -67,7 +89,8 @@
         currentPage,
         pageCount,
         changePage,
-        type
+        type,
+        title
       }
     }
   

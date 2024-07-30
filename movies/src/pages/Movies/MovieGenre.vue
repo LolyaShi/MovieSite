@@ -3,6 +3,10 @@
     
     <div class="container">
         <h1>{{genre}}</h1>
+        <div class="change_category">
+            <button><router-link :to="`/genres/movie/${id}`">Movies</router-link> </button>
+            <button><router-link :to="`/genres/tv/${id}`">TV Shows</router-link> </button>
+        </div>
 
         <div class="movies" v-if="!loading">
         <div class="movie-item" v-for='movie in movieList' :key='movie.id' >
@@ -75,13 +79,26 @@ import {defineComponent, ref, watchEffect} from 'vue'
         max-width: 1400px;
         margin: 0 auto;
     }
+    .change_category{
+        text-align: left;
+        margin: 20px 10px;
+    }
+    .change_category button{
+        padding: 10px 15px;
+        background-color: #970909;
+        margin: 0 5px;
+    }
+    .change_category a{
+        text-decoration: none;
+        color: #fff;
+    }
     h1{
         text-transform: uppercase;
     }
     .movies{
         display: flex;
         justify-content: center;
-        align-items: center;
+      
         flex-wrap: wrap;
     }
     .movie-item{

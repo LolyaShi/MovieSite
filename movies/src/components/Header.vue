@@ -6,7 +6,7 @@
             </div>
             <nav class="menu">
                 <router-link class="link menu__title" to="/home">Home</router-link>
-                <router-link class="link menu__title" to="/about">About us</router-link>
+                <router-link class="link menu__title" to="/genres">Genres</router-link>
                 <div class="tv">
                     <span class="link popup-title">Movies</span>
                     <div class="popup-menu">
@@ -20,6 +20,8 @@
                     <div class="popup-menu">
                         <router-link class="link" to="/tv_shows/popular">Popular</router-link>
                         <router-link class="link" to="/tv_shows/top_rated">Top Rated</router-link>
+                        <router-link class="link" to="/tv_shows/on_the_air">On the air</router-link>
+                        <router-link class="link" to="/tv_shows/airing_today">Airing Today</router-link>
                     </div>
                 </div>
             </nav>

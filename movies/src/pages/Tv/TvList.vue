@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Most popular movies</h1>
+    <h1>{{title}}</h1>
 
     <div class="movies" v-if="!loading">
       <div class="movie-item" v-for='movie in movies' :key='movie.id' >
@@ -37,6 +37,10 @@ export default defineComponent( {
       required: true
     },
     type: {
+      type: String,
+      required: true
+    },
+    title: {
       type: String,
       required: true
     }

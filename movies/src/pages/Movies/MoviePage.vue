@@ -134,10 +134,10 @@ import {defineComponent, ref, watchEffect} from 'vue'
   <style scoped>
     .wrapper{
       padding: 20px;
-     
+      width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
+  
     }
     .top{
       width: 100%;
@@ -174,7 +174,7 @@ import {defineComponent, ref, watchEffect} from 'vue'
     .poster img{
       max-width: 100%;
       height: auto;
-      object-fit: contain;
+      object-fit: cover;
     }
     .info{
       flex: 0 1 60%;

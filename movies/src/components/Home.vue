@@ -16,7 +16,13 @@
               <router-link :to="`/${category.collection}/${item.id}`">
                 <img :src="baseUrl+item.poster_path" alt="poster" >
                 <div class="item_name">
-                  {{ item.title }}
+                  <div v-if="category.collection == 'movie'">
+                    {{ item.title }}
+                  </div>
+                  <div v-else>
+                    {{ item.name }}
+                  </div>
+                 
                 </div>
               </router-link>
               
