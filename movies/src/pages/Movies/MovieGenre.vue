@@ -9,13 +9,14 @@
         </div>
 
         <div class="movies" v-if="!loading">
-        <div class="movie-item" v-for='movie in movieList' :key='movie.id' >
-            <router-link :to="`/${category}/${movie.id}`">
-            <div class="movie_img"><img :src="baseUrl+movie.poster_path" alt="poster" ></div>
-            <div v-if="category == 'movie'">{{ movie.title }}</div>
-            <div v-else>{{ movie.name }}</div>
-            </router-link>
-        </div>
+            <div class="movie-item" v-for='movie in movieList' :key='movie.id' >
+                <router-link :to="`/${category}/${movie.id}`">
+                <div class="movie_img"><img :src="baseUrl+movie.poster_path" alt="poster" ></div>
+                <div v-if="category == 'movie'">{{ movie.title }}</div>
+                <div v-else>{{ movie.name }}</div>
+                </router-link>
+            </div>
+            <Pagination :count="total" :currentPage="currentPage" :changePage="changePage"/>
         </div>
 
         <Load v-else />
@@ -26,11 +27,13 @@
   <script>
   import { fetchGenre, fetchGenreName } from '@/api/fetchData';
 import Load from '@/components/Load.vue';
+import Pagination from '@/components/Pagination.vue';
 import {defineComponent, ref, watchEffect} from 'vue'
   export default defineComponent( {
     name: 'MovieGenre',
     components:{
-        Load
+        Load,
+        Pagination
     },
     props: {
         id:{
@@ -50,8 +53,14 @@ import {defineComponent, ref, watchEffect} from 'vue'
         const baseUrl = "http://image.tmdb.org/t/p/w300";
         const genre = ref()
 
+        const currentPage = ref(1)
+        const total = ref(500)
+        const changePage = (page) =>{
+            currentPage.value = page
+        }
+
         const fetchGenreList = async() => {
-            movieList.value = await fetchGenre(props.category, props.id)
+            movieList.value = await fetchGenre(props.category, props.id, currentPage.value)
             genre.value = await fetchGenreName(props.id)
             loading.value = false
 
@@ -65,7 +74,10 @@ import {defineComponent, ref, watchEffect} from 'vue'
         movieList,
         loading,
         baseUrl,
-        genre
+        genre,
+        currentPage,
+        total,
+        changePage
       }
     }
   })
