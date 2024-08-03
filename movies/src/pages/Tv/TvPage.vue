@@ -17,9 +17,11 @@
           
           <p><span class="mini-title">Release:</span> {{movie.first_air_date}} </p>
           <p><span class="mini-title">Countries: </span>
-            <span class='genre' v-for="country in movie.production_countries" :key="country.name">{{ country.name }} </span>
+            <span class='genre' v-for="country in movie.production_countries" :key="country.name">
+              <router-link :to="`/country/${type}/${country.iso_3166_1}`">{{ country.name }} </router-link>
+            </span>
           </p>
-          <p><span class="mini-title">Prodaction companies: </span>
+          <p v-if="movie.production_companies.length > 0"><span class="mini-title">Prodaction companies: </span>
             <span class='genre' v-for="company in movie.production_companies" :key="company.id">{{ company.name }}</span>
           </p>
           <p><span class="mini-title">Rate:</span> {{movie.vote_average}} </p>

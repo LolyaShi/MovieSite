@@ -7,6 +7,7 @@ import TvPage from '@/pages/Tv/TvPage.vue';
 import SearchResults from '@/pages/Search/SearchResults'
 import MovieGenre from '@/pages/Movies/MovieGenre.vue'
 import Genres from '@/pages/Genres/Genres.vue';
+import CountryList from '@/pages/Country/CountryList.vue';
 import { createRouter, createWebHistory } from "vue-router";
 
 
@@ -58,7 +59,13 @@ const router = createRouter({
             path: '/genres/:category/:id',
             component: MovieGenre,
             props: true
-        }
+        },
+        {
+            path: '/country/:category/:name',
+            component: CountryList,
+            props: true
+        },
+
     ]
 })
 

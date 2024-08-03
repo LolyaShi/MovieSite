@@ -67,3 +67,9 @@ export const fetchGenreList = async() => {
     const result = await axios.get(`https://api.themoviedb.org/3/genre/list`, {headers})
     return result.data.genres
 }
+
+export const fetchCountry = async(page, category, country) => {
+    const result = await axios.get(`https://api.themoviedb.org/3/discover/${category}?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${page}&sort_by=popularity.desc&with_origin_country=${country}`, {headers})
+    console.log(result)
+    return result.data
+}
