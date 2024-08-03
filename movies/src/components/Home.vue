@@ -142,16 +142,29 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      overflow-x: auto;
+      width: 100%;
     }
     .catalog_item{
-      margin-right: 10px;
-      width: 300px;
+      margin: 0 5px;
+      flex: 1 1 auto;
       position: relative;
     }
+    @media(max-width:992px){
+      .catalog_item{
+        min-width: 33.3%;
+      }
+    }
+    @media(max-width:767px){
+      .catalog_item{
+        min-width: 100%;
+      }
+    }
+
     .catalog_item img{
       max-width: 100%;
       height: auto;
-      object-fit: contain;
+      object-fit: fill;
     }
     .item_name{
       position: absolute;

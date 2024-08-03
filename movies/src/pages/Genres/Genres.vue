@@ -36,13 +36,13 @@ import {defineComponent, ref, watchEffect} from 'vue'
   <style scoped>
     .container{
       width: 100%;
-      padding: 20px;
+     
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
     }
     .item{
-      flex: 0 1 25%;
+      flex: 1 1 25%;
       padding: 20px 10px;
       margin: 10px;
       background-color: #b81414;

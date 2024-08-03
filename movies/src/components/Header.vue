@@ -26,18 +26,41 @@
                 </div>
             </nav>
             <div class="search">
-                <input type="text" v-model="search">
-                <router-link :to="`/search/${path}`"><button @click="searchRes">Search</button></router-link>
+                <img class="search__img" src="/search.svg" alt="search">
+                
+                <div class="input__block">
+                    <input type="text" v-model="search">
+                    <router-link :to="`/search/${path}`"><button class="search__btn" @click="searchRes">Search</button></router-link>
+                </div>
+                
             </div>
-            <div @click="openMenu" class="burger">
-                <span class="line"></span>
+
+            <div class="adapt__menu">
+                <div @click="openSearch" class="search__adapt">
+                    <img class="search__img" src="/search.svg" alt="search">
+                </div>
+                <div @click="openMenu" class="burger">
+                    <span class="line"></span>
+                </div>
             </div>
+            
         </div>
         <div v-if="open" class="burger_menu">
                 <router-link @click="openMenu" class="link" to="/home">Home</router-link>
-                <router-link @click="openMenu" class="link" to="/about">About us</router-link>
-                
+                <router-link @click="openMenu" class="link" to="/genres">Genres</router-link>
+                <div class="tv">
+                    <span class="link popup-title">Movies</span>
+                    <ul>
+                        <li><router-link class="link" to="/movies/popular">Popular</router-link></li>
+                        <li><router-link class="link" to="/movies/top_rated">Top Rated</router-link></li>
+                        <li><router-link class="link" to="/movies/upcoming">Upcoming</router-link></li>
+                    </ul>
+                </div>
             
+        </div>
+        <div v-if="searchInput" class="search_menu">
+            <input type="text" v-model="search">
+            <router-link @click="openSearch" :to="`/search/${path}`"><button class="search__btn" @click="searchRes">Search</button></router-link>
         </div>
    </header>
     
@@ -54,6 +77,10 @@ import {defineComponent, ref} from 'vue'
         function openMenu(){
             open.value = !open.value
         }
+        const searchInput = ref("false");
+        function openSearch(){
+            searchInput.value = !searchInput.value
+        }
         const search = ref()
         const path = ref();
 
@@ -69,7 +96,9 @@ import {defineComponent, ref} from 'vue'
         openMenu,
         search,
         path,
-        searchRes
+        searchRes,
+        searchInput,
+        openSearch
       }
     }
   })
@@ -152,6 +181,10 @@ import {defineComponent, ref} from 'vue'
     }
     /*search */
 
+    .search{
+        display: flex;
+        align-items: center;
+    }
     .search input{
         font-size: 16px;
         line-height: 18px;
@@ -165,13 +198,18 @@ import {defineComponent, ref} from 'vue'
         outline: none;
         box-shadow: 0 0 15px  #ab3939;
     }
-    .search button{
+    .search__btn{
         font-size: 16px;
         padding: 5px;
         background-color: #c51212;
         color: #fff;
         margin-left: 5px;
         cursor: pointer;
+    }
+    .search__img{
+        filter: invert();
+        margin-right: 5px; 
+        max-width: 20px;
     }
 
     /*burger*/ 
@@ -207,13 +245,26 @@ import {defineComponent, ref} from 'vue'
         position: absolute;
         right: 0;
         width: 300px;
-        height: 100dvh;
-        background-color: rgba(35, 27, 27, 0.696);
+        height: 100vh;
+        background-color: rgba(24, 21, 21, 0.833);
         display: none;
         flex-direction: column;
+        z-index: 3;
+    }
 
+    .search_menu{
+        display: none;
+        position: absolute;
+        right: 0;
+        width: auto;
+        height: auto;
+        padding: 10px;
+       background-color: rgba(32, 29, 29, 0.886);
     }
   
+    .adapt__menu{
+        display: none;
+    }
 
     @media(max-width: 767px){
         .menu{
@@ -224,6 +275,15 @@ import {defineComponent, ref} from 'vue'
         }
         .burger_menu{
             display: flex;
+        }
+        .search{
+            display: none;
+        }
+        .adapt__menu{
+            display: flex;
+        }
+        .search_menu{
+            display: block;
         }
     }
   </style>

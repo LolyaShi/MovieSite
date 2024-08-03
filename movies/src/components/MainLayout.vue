@@ -26,8 +26,9 @@
         max-width: 1400px;
         margin: 0 auto;
         min-height: 100vh;
-        padding: 0  0 50px 0;
+        padding: 0 10px;
         position: relative;
+        background-color: rgb(21, 19, 19);
     }
   </style>
   
