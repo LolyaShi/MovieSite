@@ -39,7 +39,6 @@ import {defineComponent, ref, watchEffect} from 'vue'
       for(let list of lists.value){
         watchEffect(async () => {
           const result = await fetchGenreList(list.category)
-          console.log(result)
           list.genres = result
 
         })

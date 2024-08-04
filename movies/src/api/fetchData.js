@@ -16,7 +16,6 @@ const GENRE_URL = (category, id, page) => {return `https://api.themoviedb.org/3/
 
 async function getData(type, category, page){
     const response = await axios.get(BASE_URL(type, category, page), {headers});
-    console.log(response.data.results)
     return response.data.results;
 }
 
@@ -47,13 +46,11 @@ export async function fetchSimilar(category, id){
 
 export async function fetchReviews(category, id){
     const response = await axios.get(REVIEW_URL(category, id), {headers})
-    console.log(response.data.results)
     return response.data.results
 }
 
 export async function fetchGenre(category, id, page){
     const response = await axios.get(GENRE_URL(category, id, page), {headers})
-    console.log(response)
     return response.data.results
 }
 
@@ -70,6 +67,5 @@ export const fetchGenreList = async(category) => {
 
 export const fetchCountry = async(page, category, country) => {
     const result = await axios.get(`https://api.themoviedb.org/3/discover/${category}?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${page}&sort_by=popularity.desc&with_origin_country=${country}`, {headers})
-    console.log(result)
     return result.data
 }

@@ -1,25 +1,34 @@
 <template>
-    
-    <h2>Search result for "{{ text }}"</h2>
-    <div class="container">
-        <div class="item" v-for="item in searchList" :key="item.id">
-            <router-link :to="`/${item.media_type}/${item.id}`">
-                <div class="movie_img"><img :src="baseUrl+item.poster_path" alt="poster" ></div>
-                <div class="movie_title">
-                    <div v-if="item.title">{{ item.title }}</div>
-                    <div v-else>{{ item.name }}</div>
-                </div>
-                
-            </router-link>
+    <div v-if="!loading">
+        <h2>Search result for "{{ text }}"</h2>
+        <div v-if="searchList.length > 0" class="container">
+            <div class="item" v-for="item in searchList" :key="item.id">
+                <router-link :to="`/${item.media_type}/${item.id}`">
+                    <div class="movie_img"><img :src="baseUrl+item.poster_path" alt="poster" ></div>
+                    <div class="movie_title">
+                        <div v-if="item.title">{{ item.title }}</div>
+                        <div v-else>{{ item.name }}</div>
+                    </div>
+                    
+                </router-link>
+            </div>
         </div>
+        <ErrorPage v-else />
     </div>
+    <Load v-else />
   </template>
   
   <script>
   import {defineComponent, watchEffect, ref} from 'vue'
   import { fetchSearchResult } from '@/api/fetchData';
+import ErrorPage from '@/components/ErrorPage.vue';
+import Load from '@/components/Load.vue';
   export default defineComponent( {
     name: 'SearchResults',
+    components: {
+        ErrorPage,
+        Load
+    },
 
     props: {
         text: {
@@ -29,13 +38,14 @@
     },
      
     setup(props){
-
+        const loading = ref(true)
         const searchList = ref([])
         const baseUrl = "http://image.tmdb.org/t/p/w300";
 
         const searchResult = async() => {
             const result = await fetchSearchResult(props.text)
             searchList.value = result.results.filter((item) => {return item.media_type !== 'person'})
+            loading.value = false
         }
         watchEffect(() => {
             searchResult()
