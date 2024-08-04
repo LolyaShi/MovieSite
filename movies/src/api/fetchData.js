@@ -63,8 +63,8 @@ export const fetchGenreName = async(id) => {
         return result.data.name
 }
 
-export const fetchGenreList = async() => {
-    const result = await axios.get(`https://api.themoviedb.org/3/genre/list`, {headers})
+export const fetchGenreList = async(category) => {
+    const result = await axios.get(`https://api.themoviedb.org/3/genre/${category}/list`, {headers})
     return result.data.genres
 }
 

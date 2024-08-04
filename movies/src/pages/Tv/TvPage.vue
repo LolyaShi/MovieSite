@@ -142,7 +142,7 @@ import {defineComponent, ref, watchEffect} from 'vue'
   <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
     .wrapper{
-      padding: 20px;
+      
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -150,7 +150,7 @@ import {defineComponent, ref, watchEffect} from 'vue'
     }
     .top{
       width: 100%;
-      height: 500px;
+      
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -158,7 +158,7 @@ import {defineComponent, ref, watchEffect} from 'vue'
     .top img{
       width: 100%;
       height: auto;
-      object-fit: contain
+      object-fit: fill;
     }
     .shadow{
       position: absolute;
@@ -181,6 +181,9 @@ import {defineComponent, ref, watchEffect} from 'vue'
       justify-content: space-around;
       margin-top: 30px;
     }
+
+   
+
     .poster{
       flex: 0 1 40%;
       width: 100%;
@@ -203,6 +206,26 @@ import {defineComponent, ref, watchEffect} from 'vue'
       text-align: left;
      
     }
+
+    @media(max-width: 992px){
+      .info{
+        padding: 0 20px;
+      }
+    }
+
+    @media(max-width: 767px){
+      .movie{
+        flex-direction: column;
+        align-items: center;
+      }
+      .info{
+        padding: 0 20px;
+      }
+      .poster{
+        top: 0;
+      }
+    }
+
     .top h2{
       font-size: 50px;
       font-weight: 700;
@@ -242,6 +265,18 @@ import {defineComponent, ref, watchEffect} from 'vue'
       line-height: 24px;
     }
 
+    @media(max-width: 767px){
+
+      .top h2{
+        font-size: 30px;
+      }
+      .overview{
+        text-align: center;
+        padding: 0 50px;
+        margin-top: 20px;
+      }
+    }
+
     /*similar */
 
     .similar{
@@ -265,6 +300,19 @@ import {defineComponent, ref, watchEffect} from 'vue'
       overflow: hidden;
  
     }
+
+    @media(max-width: 992px){
+      .similar__item{
+        min-width: 25%;
+      }
+    }
+
+    @media(max-width: 767px){
+      .similar__item{
+        min-width: 50%;
+      }
+    }
+
 
     .similar__item img{
       max-width: 100%;
@@ -302,6 +350,13 @@ import {defineComponent, ref, watchEffect} from 'vue'
       padding: 0 100px;
       text-align: left;
     }
+
+    @media(max-width: 767px){
+      .review__container{
+        padding: 0 50px;
+      }
+    }
+
     .review__item {
       margin: 20px 0;
     }

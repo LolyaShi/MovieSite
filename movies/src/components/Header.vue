@@ -29,7 +29,7 @@
                 <img class="search__img" src="/search.svg" alt="search">
                 
                 <div class="input__block">
-                    <input type="text" v-model="search">
+                    <input class="search__input" type="text" v-model="search">
                     <router-link :to="`/search/${path}`"><button class="search__btn" @click="searchRes">Search</button></router-link>
                 </div>
                 
@@ -51,15 +51,24 @@
                 <div class="tv">
                     <span class="link popup-title">Movies</span>
                     <ul>
-                        <li><router-link class="link" to="/movies/popular">Popular</router-link></li>
-                        <li><router-link class="link" to="/movies/top_rated">Top Rated</router-link></li>
-                        <li><router-link class="link" to="/movies/upcoming">Upcoming</router-link></li>
+                        <li class="adapt__mini__link"><router-link @click="openMenu" class="link" to="/movies/popular">Popular</router-link></li>
+                        <li class="adapt__mini__link"><router-link @click="openMenu" class="link" to="/movies/top_rated">Top Rated</router-link></li>
+                        <li class="adapt__mini__link"><router-link @click="openMenu" class="link" to="/movies/upcoming">Upcoming</router-link></li>
+                    </ul>
+                </div>
+                <div class="tv">
+                    <span class="link popup-title">TV shows</span>
+                    <ul>
+                        <li class="adapt__mini__link"><router-link @click="openMenu" class="link" to="/tv_shows/popular">Popular</router-link></li>
+                        <li class="adapt__mini__link"><router-link @click="openMenu" class="link" to="/tv_shows/top_rated">Top Rated</router-link></li>
+                        <li class="adapt__mini__link"><router-link @click="openMenu" class="link" to="/tv_shows/on_the_air">On the air</router-link></li>
+                        <li class="adapt__mini__link"><router-link @click="openMenu" class="link" to="/tv_shows/airing_today">Airing Today</router-link></li>
                     </ul>
                 </div>
             
         </div>
         <div v-if="searchInput" class="search_menu">
-            <input type="text" v-model="search">
+            <input class="search__input" type="text" v-model="search">
             <router-link @click="openSearch" :to="`/search/${path}`"><button class="search__btn" @click="searchRes">Search</button></router-link>
         </div>
    </header>
@@ -77,7 +86,7 @@ import {defineComponent, ref} from 'vue'
         function openMenu(){
             open.value = !open.value
         }
-        const searchInput = ref("false");
+        const searchInput = ref(false);
         function openSearch(){
             searchInput.value = !searchInput.value
         }
@@ -185,7 +194,7 @@ import {defineComponent, ref} from 'vue'
         display: flex;
         align-items: center;
     }
-    .search input{
+    .search__input{
         font-size: 16px;
         line-height: 18px;
         padding: 5px;
@@ -193,7 +202,7 @@ import {defineComponent, ref} from 'vue'
         border: solid 1px #ab3939;
         color: #fff;
     }
-    .search input:focus{
+    .search__input:focus{
         border: solid 1px #ab3939;
         outline: none;
         box-shadow: 0 0 15px  #ab3939;
@@ -218,6 +227,7 @@ import {defineComponent, ref} from 'vue'
         height: 20px;
         position: relative;
         display: none;
+        margin-left: 10px;
     }
     .line{
         display: block;
@@ -244,18 +254,27 @@ import {defineComponent, ref} from 'vue'
     .burger_menu{
         position: absolute;
         right: 0;
-        width: 300px;
+        padding: 10px 100px;
         height: 100vh;
         background-color: rgba(24, 21, 21, 0.833);
         display: none;
         flex-direction: column;
-        z-index: 3;
+        z-index: 5;
+    }
+
+    .adapt__mini__link{
+        list-style: none;
+    }
+    .adapt__mini__link a{
+        font-size: 16px;
+        color: #f64d4d
     }
 
     .search_menu{
         display: none;
         position: absolute;
         right: 0;
+        z-index: 5;
         width: auto;
         height: auto;
         padding: 10px;
@@ -266,7 +285,7 @@ import {defineComponent, ref} from 'vue'
         display: none;
     }
 
-    @media(max-width: 767px){
+    @media(max-width: 992px){
         .menu{
             display: none;
         }

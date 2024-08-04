@@ -3,10 +3,7 @@
     
     <div class="container">
         <h1>{{genre}}</h1>
-        <div class="change_category">
-            <button><router-link :to="`/genres/movie/${id}`">Movies</router-link> </button>
-            <button><router-link :to="`/genres/tv/${id}`">TV Shows</router-link> </button>
-        </div>
+     
 
         <div class="movies" v-if="!loading">
             <div class="movie-item" v-for='movie in movieList' :key='movie.id' >

@@ -2,9 +2,16 @@
     
     <h2>Genres</h2>
     <div class="container">
-      <div class="item" v-for="genre in genres" :key="genre.id">
-        <router-link :to="`/genres/movie/${genre.id}`">{{ genre.name }}</router-link>
+      <div class="category" v-for="list in lists" :key="list.category">
+        <h2>{{ list.category }}</h2>
+        <div class="items__container">
+          <div class="item" v-for="genre in list.genres" :key="genre.id">
+            <router-link :to="`/genres/${list.category}/${genre.id}`">{{ genre.name }}</router-link>
+          </div>
+        </div>
+        
       </div>
+      
     </div>
   </template>
   
@@ -17,16 +24,33 @@ import {defineComponent, ref, watchEffect} from 'vue'
     setup(){
 
       const genres = ref([])
-      const genreList = async () => {
-        genres.value = await fetchGenreList()
+
+      const lists = ref([
+        {
+          category: 'movie',
+          genres: []
+        },
+        {
+          category: 'tv',
+          genres: []
+        }
+      ])
+
+      for(let list of lists.value){
+        watchEffect(async () => {
+          const result = await fetchGenreList(list.category)
+          console.log(result)
+          list.genres = result
+
+        })
+        
       }
 
-      watchEffect(() => {
-        genreList()
-      })
+      
   
       return{
-        genres
+        genres,
+        lists
       }
     }
   })
@@ -37,6 +61,14 @@ import {defineComponent, ref, watchEffect} from 'vue'
     .container{
       width: 100%;
      
+      
+    }
+    .category h2{
+      font-size: 22px;
+      text-transform: uppercase;
+      color: #b81414;
+    }
+    .items__container{
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
